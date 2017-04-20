@@ -1,0 +1,48 @@
+<div class="container">
+  <h1>Hero Form</h1>
+  <div *ngIf="!submitted; else submitMessage">
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="model.name" #name="ngModel" #spy>        {{spy.className}}
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger" style="margin-top:5px">
+          Name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="alterEgo">Alter Ego</label>
+        <input type="text" class="form-control" id="alterEgo" name="alterEgo" [(ngModel)]="model.alterEgo">
+      </div>
+      <div class="form-group">
+        <label for="power">Power</label>
+        <select name="" id="power" class="form-control" name="power" [(ngModel)]="model.power" #power="ngModel" required>
+        <option *ngFor=" let power of powers" value="{{power}}">{{power}}</option>
+      </select>
+        <div [hidden]="power.valid || power.pristine" class="alert alert-danger" style="margin-top:5px">
+          Power is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button (click)="newHero(); heroForm.reset()" class="btn btn-default">Reset Form</button>
+
+    </form>
+  </div>
+  <ng-template #submitMessage>
+    <table>
+      <tr>
+        <td>Name</td>
+        <td>{{model.name}}</td>
+      </tr>
+      <tr>
+        <td>Power</td>
+        <td>{{model.power}}</td>
+      </tr>
+      <tr *ngIf="model.alterEgo">
+        <td>Alter Ego</td>
+        <td>{{model.alterEgo}}</td>
+      </tr>
+      <button class="btn btn-default" (click)="submitted = false">Edit</button>
+    </table>
+  </ng-template>
+</div>
